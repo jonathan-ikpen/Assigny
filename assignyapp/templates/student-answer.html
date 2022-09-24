@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{%static '/css/general.css'%}" />
+    <link rel="stylesheet" href="{%static '/css/style.css'%}" />
+    <link rel="stylesheet" href="{%static '/css/dashboard.css'%}" />
+    <link rel="stylesheet" href="{%static '/css/queries.css'%}" />
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+
+    <!-- GOOGLE FONTS (RUBIK) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&family=Rubik:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&family=Ubuntu:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- IONICONS -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <!-- Smooth Scroll Script -->
+    <script
+      defer
+      src="https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js"
+    ></script>
+
+    <!-- Main JavaScript File -->
+    <script defer src="/dist/bundle.js"></script>
+    <title>Student dashboard</title>
+  </head>
+  <body>
+    <div class="loggedin-page">
+      <header class="loggedin-page-header">
+        <a href="{%url 'index'%}">
+          <img src="{% static '/img/logo2.png'%}" alt="" class="logo" />
+        </a>
+        <nav class="main-nav">
+          <ul class="main-nav-list">
+            <li>
+              <a href="{%url 'logout'%}" class="main-nav-link nav-cta"
+                >Log Out</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <main class="loggedin-page-main">
+        <section class="new-assignment container">
+          {%for message in messages%}
+          <h3>{{message}}</h3>
+          {%endfor%} <br />
+          <br />
+
+          <h2 class="welcome-heading" style="display: block">
+            {{assignment.course_code | title}}
+          </h2>
+          <br />
+          <!-- <p class="answer-title small-heading">Assignment 1</p> -->
+
+          <form action="" class="new-assignment-form" method="POST">
+            {%csrf_token%}
+            <div class="new-ass-form-field">
+              <p class="assignment-deadline">Deadline: {{assignment.due}}</p>
+            </div>
+            <div class="new-ass-form-field">
+              <label for="datetime" class="datetime-label"></label>
+              <div class="image">image here</div>
+            </div>
+            <div class="new-ass-form-field">
+              <label
+                for="description"
+                class="description-label"
+                style="font-size: 1.2rem"
+                >Description:
+              </label>
+              <p class="assignment-desc">{{assignment.description}}</p>
+              <textarea
+                id=""
+                cols="30"
+                rows="10"
+                class="description"
+                name="answer"
+                required
+              ></textarea>
+              <input
+                type="hidden"
+                value="{{assignment.title}}"
+                name="assign_title"
+              />
+            </div>
+            <div class="new-ass-form-field grid--col-1">
+              <label for="attachment" class="attachment-label"
+                >Attachment</label
+              >
+              <input type="file" name="attachment" id="" class="attachment" />
+            </div>
+            <button class="send-btn">SEND &Succeeds;</button>
+          </form>
+          {%if submission%} {%for sub in submission%} {%if sub.score%}
+          <h1>Assignment Has Been Marked</h1>
+          <br />
+          <br />
+          <h1>Score: {{sub.score}}</h1>
+          {%else%}
+          <h1>Assignment Submitted but Not marked</h1>
+          {%endif%}
+          <!-- <h1>your answer is {{sub.answer}}</h1> -->
+          {%endfor%} {%else%}
+          <h1>Submit your assignment and Get your score</h1>
+          {%endif%}
+        </section>
+      </main>
+      <aside class="loggedin-page-aside">
+        <nav class="dashboard-nav">
+          <ul class="dashboard-nav-list">
+            <li class="dashboard-nav-li">
+              <a href="{%url 'index' %}" class="dashboard-nav-link">
+                <img
+                  src="{% static '/img/pti2.png'%}"
+                  alt=""
+                  style="width: 5%"
+                />
+              </a>
+            </li>
+            <li class="dashboard-nav-li">
+              <a href="{%url 'dashboard' %}" class="dashboard-nav-link"
+                ><span class="material-symbols-outlined"> dashboard </span></a
+              >
+            </li>
+            {%if user.status == 'lecturer'%}
+            <li class="dashboard-nav-li">
+              <a href="{%url 'assignment' %}" class="dashboard-nav-link"
+                ><span class="material-symbols-outlined">
+                  assignment_add
+                </span></a
+              >
+            </li>
+            {%endif%} {%if user.status == 'lecturer'%}
+            <li class="dashboard-nav-li">
+              <a href="{%url 'view_answers'%}" class="dashboard-nav-link"
+                ><span class="material-symbols-outlined"> rate_review </span></a
+              >
+            </li>
+            {%endif%}
+            <li class="dashboard-nav-li">
+              <a href="#" class="dashboard-nav-link"
+                ><span class="material-symbols-outlined">
+                  settings_overscan
+                </span></a
+              >
+            </li>
+            <!-- <li>
+              <ul class="courses-nav-list">
+                <li class="courses-nav-li">
+                  <a href="#" class="courses-nav-link"></a>
+                </li>
+                <li class="courses-nav-li">
+                  <a href="#" class="courses-nav-link"></a>
+                </li>
+                <li class="courses-nav-li">
+                  <a href="#" class="courses-nav-link"> </a>
+                </li>
+              </ul>
+            </li> -->
+            <li class="dashboard-nav-li">
+              <a href="{%url 'profile'%}" class="dashboard-nav-link"
+                ><span class="material-symbols-outlined">
+                  manage_accounts
+                </span></a
+              >
+            </li>
+            {%if user.status == 'student'%}
+            <li class="dashboard-nav-li">
+              <a href="{%url 'view_assignments'%}" class="dashboard-nav-link"
+                ><span class="material-symbols-outlined">
+                  library_books
+                </span></a
+              >
+            </li>
+            {%endif%}
+            <li class="dashboard-nav-li">
+              <a href="#" class="dashboard-nav-link">
+                <span class="material-symbols-outlined"> settings </span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
+    <footer>Copyright © Powered By CSIT Group 1 2022</footer>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+@media screen and (max-width: 414px) {
+  .logo {
+    width: 40%;
+  }
+
+  .home {
+    /* background-position: 0% 50%; */
+  }
+  .home img {
+    width: 15% !important;
+  }
+  .home-text {
+    display: none !important;
+  }
+
+  .new-assignment {
+    padding: 2rem;
+  }
+
+  .new-assignment-form {
+    grid-template-columns: 1fr;
+  }
+
+  .new-ass-form-field {
+    grid-column: 1/2;
+  }
+
+  .send-btn {
+    grid-column: 1/2;
+  }
+}
+
+@media screen and (max-width: 912px) {
+  .home {
+    background-position: 16% 50%;
+  }
+}
+
+@media screen and (max-width: 10280px) {
+  .new-ass-form-field:nth-child(5) {
+    grid-column: 1/2;
+  }
+}

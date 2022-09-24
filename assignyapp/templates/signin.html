@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{%static '/css/general.css'%}" />
+    <link rel="stylesheet" href="{%static '/css/style.css'%}" />
+    <link rel="stylesheet" href="{%static '/css/queries.css'%}" />
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+
+    <!-- GOOGLE FONTS (RUBIK) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&family=Rubik:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&family=Ubuntu:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- IONICONS -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <!-- Smooth Scroll Script -->
+    <script
+      defer
+      src="https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js"
+    ></script>
+
+    <!-- Main JavaScript File -->
+    <script defer src="/dist/bundle.js"></script>
+    <title>Sign In</title>
+  </head>
+  <body>
+    <header class="header">
+      <a href="{%url 'index'%}">
+        <img src="{% static '/img/logo2.png'%}" alt="" class="logo" />
+      </a>
+      <nav class="main-nav">
+        <ul class="main-nav-list">
+          <li>
+            <a href="{%url 'index'%}" class="main-nav-link nav-cta">Home</a>
+          </li>
+        </ul>
+      </nav>
+
+      <button class="btn btn-mobile-nav">
+        <ion-icon class="icon-mobile-nav" name="menu-outline"></ion-icon>
+        <ion-icon class="icon-mobile-nav" name="close-outline"></ion-icon>
+      </button>
+    </header>
+
+    <main>
+      <div class="home" id="sign">
+        <h2 class="welcome-heading">WELCOME BACK!</h2>
+        <p class="small-heading">Login Here</p>
+        {%for message in messages%}
+        <p style="color: rgb(236, 45, 45); font-size: 1.4rem">{{message}}</p>
+        {%endfor%}
+        <form action="" class="signin-form" method="post">
+          {%csrf_token%}
+          <div class="form-field">
+            <label for="Username" class="email-label">Username</label>
+            <input type="text" name="Username" class="email" required />
+          </div>
+          <div class="form-field">
+            <label for="password" class="password-label">Password</label>
+            <input type="password" class="password" name="password" required />
+          </div>
+          <div class="remember-me-field">
+            <input type="checkbox" name="remember" id="" />
+            <label for="remember" class="remember">Remember me</label>
+          </div>
+          <div class="form-btns">
+            <a href="#" class="forget-pass">Forget your password?</a>
+            <button class="login-btn">LOG IN</button>
+          </div>
+        </form>
+        <a href="{%url 'register'%}" class="register-btn"
+          >&rarr; New?, Register Here</a
+        >
+      </div>
+    </main>
+    <footer>Copyright © Powered By CSIT Group 1 2022</footer>
+  </body>
+</html>
