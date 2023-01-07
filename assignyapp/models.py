@@ -31,7 +31,7 @@ class Lecturer(models.Model):
     description = models.TextField()
     course_code = models.CharField(max_length=255, null= True)
     due = models.DateTimeField(blank=True)
-    attachment = models.FileField(upload_to='media')
+    attachment = models.FileField(upload_to='media/files')
     date_created = models.DateTimeField(auto_now_add=True)
     score = models.IntegerField(null=True)
 
@@ -51,9 +51,9 @@ class Student(models.Model):
     course_code = models.CharField(max_length=255, null= True)
     answer = models.TextField()
     mat_no = models.CharField(max_length=255, null= True)
-    attachment = models.FileField(upload_to='media')
+    attachment = models.FileField(upload_to='media/files')
     date_created = models.DateTimeField(auto_now_add=True)
-    assignment = models.ForeignKey(Lecturer, on_delete=models.CASCADE, null = True)
+    assignment = models.ForeignKey(Lecturer, on_delete=models.SET_NULL, null = True)
     score = models.IntegerField(null=True)
     assign_title = models.CharField(max_length=255, null= True)
 

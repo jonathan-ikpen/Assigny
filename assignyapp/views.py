@@ -6,12 +6,16 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic.edit import UpdateView
+from django.utils import timezone
+
 
 
 
 
 
 def index(request):
+    due_date = timezone.datetime.now()
+    due_assignments = Lecturer.objects.filter(due__lt = due_date).delete()
     return render(request, 'index.html')
 
 
@@ -25,7 +29,7 @@ def assignment(request):
         title = request.POST["title"]
         description = request.POST["description"]
         datetime = request.POST["datetime"]
-        attachment = request.POST["attachment"]
+        attachment = request.FILES['attachment']
         course_code = request.user.course_code
         user = request.user
 
@@ -34,11 +38,15 @@ def assignment(request):
             description = description,
             due = datetime,
             course_code = course_code,
+            attachment = attachment,
             user = user
         
         )
         courses.save()
         messages.success(request, "Assignment Uploaded Successfully!!!")
+        
+    due_date = timezone.datetime.now()
+    due_assignments = Lecturer.objects.filter(due__lt = due_date).delete()
 
     return render(request, 'upload-a-question.html')
 
@@ -55,6 +63,15 @@ def view_answers(request):
             "submission": submission,
             "questions": questions
         }
+
+    due_date = timezone.datetime.now()
+    due_assignments = Lecturer.objects.filter(due__lt = due_date).delete()
+    
+    
+    
+    time_delete_answer = timezone.now()- timezone.timedelta(days=30)
+    delete_answer = Student.objects.filter(date_created__lt = time_delete_answer).delete()
+    
     return render(request, 'view-answers.html', context)
 
 
@@ -74,6 +91,9 @@ def dashboard(request):
         "assignment": assignment,
         "submit": submit,
     }
+    
+    due_date = timezone.datetime.now()
+    due_assignments = Lecturer.objects.filter(due__lt = due_date).delete()
     return render(request, "dashboard.html", context)
 
 
@@ -86,6 +106,7 @@ def submit(request, pk):
     assignment = Lecturer.objects.get(id = pk)
     if request.method == "POST":
         answer = request.POST['answer']
+        attachment = request.FILES['attachment']
         mat_no = request.user.mat_no
         name = request.user.first_name + ' ' + request.user.last_name
         course_code = assignment.course_code
@@ -98,6 +119,7 @@ def submit(request, pk):
             name = name,
             course_code = course_code,
             assignment = assignment,
+            attachment = attachment,
             assign_title = assignment_title
         )
         submit.save()
@@ -111,6 +133,8 @@ def submit(request, pk):
             "assignment": assignment,
             "submission": submission
         }
+    due_date = timezone.datetime.now()
+    due_assignments = Lecturer.objects.filter(due__lt = due_date).delete()
     return render(request, "student-answer.html", context)
 
 
@@ -136,6 +160,9 @@ def mark_answers(request, pk):
         "questions": questions,
 
     }
+    
+    due_date = timezone.datetime.now()
+    due_assignments = Lecturer.objects.filter(due__lt = due_date).delete()
 
     return render(request, "open-answer.html", context)
 
@@ -150,6 +177,10 @@ def view_assignments(request):
     context = {
         "assignments": assignments
     }
+
+    due_date = timezone.datetime.now()
+    due_assignments = Lecturer.objects.filter(due__lt = due_date).delete()
+    
     return render(request, "assignments.html", context)
 
 

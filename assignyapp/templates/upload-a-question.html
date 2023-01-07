@@ -86,7 +86,7 @@
           <h2 class="gen-heading">New Assignment</h2>
           <br />
           <p class="course-heading">{{user.course_code}}</p>
-          <form action="" class="new-assignment-form" method="POST">
+          <form action="" class="new-assignment-form" method="POST" enctype="multipart/form-data">
             {%csrf_token%}
             <div class="new-ass-form-field">
               <label for="title" class="title-label">Title</label>
@@ -125,7 +125,7 @@
               <label for="attachment" class="attachment-label"
                 >Attachment</label
               >
-              <input type="file" name="attachment" id="" class="attachment" />
+              <input type="file" name="attachment" id="" class="attachment"  required/>
             </div>
             <button class="send-btn">SEND &Succeeds;</button>
           </form>
