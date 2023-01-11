@@ -269,6 +269,11 @@ def profile(request):
     return render(request, 'profile.html')
 
 
+@login_required(login_url = 'signin')
+def student_score_table(request):
+    return render(request, 'student-score.html')
+
+
 
 
 

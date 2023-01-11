@@ -55,7 +55,7 @@
     <div class="loggedin-page">
       <header class="loggedin-page-header">
         <a href="{%url 'index'%}">
-          <img src="{% static '/img/logo2.png'%}" alt="" class="logo" />
+          <img src="{% static '/img/logo-fupre.png'%}" alt="" class="logo" />
         </a>
         <nav class="main-nav">
           <ul class="main-nav-list">
@@ -106,9 +106,9 @@
             <li class="dashboard-nav-li">
               <a href="{%url 'index' %}" class="dashboard-nav-link">
                 <img
-                  src="{% static '/img/pti2.png'%}"
+                  src="{% static '/img/logo-fupre.png'%}"
                   alt=""
-                  style="width: 5%"
+                  style="width: 10%"
                 />
               </a>
             </li>
@@ -131,14 +131,13 @@
                 ><span class="material-symbols-outlined"> rate_review </span></a
               >
             </li>
-            {%endif%}
+            {%endif%} {%if user.status == 'student'%}
             <li class="dashboard-nav-li">
-              <a href="#" class="dashboard-nav-link"
-                ><span class="material-symbols-outlined">
-                  settings_overscan
-                </span></a
+              <a href="{%url 'student_score_table'%}" class="dashboard-nav-link"
+                ><span class="material-symbols-outlined"> task </span></a
               >
             </li>
+            {%endif%}
             <!-- <li>
               <ul class="courses-nav-list">
                 <li class="courses-nav-li">
@@ -177,6 +176,6 @@
         </nav>
       </aside>
     </div>
-    <footer>Copyright © Powered By CSIT Group 1 2022</footer>
+    <footer>Copyright © 2023 Powered By UGBOGU SAMUEL</footer>
   </body>
 </html>

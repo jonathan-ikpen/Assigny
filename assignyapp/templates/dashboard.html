@@ -55,7 +55,7 @@
     <div class="loggedin-page">
       <header class="loggedin-page-header">
         <a href="{%url 'index'%}">
-          <img src="{% static '/img/logo2.png'%}" alt="" class="logo" />
+          <img src="{% static '/img/logo-fupre.png'%}" alt="" class="logo" />
         </a>
         <nav class="main-nav">
           <ul class="main-nav-list">
@@ -102,7 +102,7 @@
         </section>
         {%endfor%}
         {%else%}
-        <h2>No Assignments Yet</h2>
+        <h1 style="text-align: center">No Assignments Yet</h1>
         {%endif%}
          {%elif user.status == 'lecturer'%}
         <section id="lecturer-main">
@@ -127,9 +127,9 @@
             <li class="dashboard-nav-li">
               <a href="{%url 'index' %}" class="dashboard-nav-link">
                 <img
-                  src="{% static '/img/pti2.png'%}"
+                  src="{% static '/img/logo-fupre.png'%}"
                   alt=""
-                  style="width: 5%"
+                  style="width: 10%"
                 />
               </a>
             </li>
@@ -153,13 +153,15 @@
               >
             </li>
             {%endif%}
+            {%if user.status == 'student'%}
             <li class="dashboard-nav-li">
-              <a href="#" class="dashboard-nav-link"
+              <a href="{%url 'student_score_table'%}" class="dashboard-nav-link"
                 ><span class="material-symbols-outlined">
-                  settings_overscan
+                  task
                 </span></a
               >
             </li>
+            {%endif%}
             <!-- <li>
               <ul class="courses-nav-list">
                 <li class="courses-nav-li">
@@ -198,6 +200,6 @@
         </nav>
       </aside>
     </div>
-    <footer>Copyright © Powered By CSIT Group 1 2022</footer>
+    <footer>Copyright © 2023 Powered By UGBOGU SAMUEL</footer>
   </body>
 </html>

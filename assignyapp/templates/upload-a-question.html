@@ -55,7 +55,7 @@
     <div class="loggedin-page">
       <header class="header loggedin-page-header">
         <a href="#">
-          <img src="{% static '/img/logo2.png'%}" alt="" class="logo" />
+          <img src="{% static '/img/logo-fupre.png'%}" alt="" class="logo" />
         </a>
         <nav class="main-nav">
           <ul class="main-nav-list">
@@ -86,7 +86,12 @@
           <h2 class="gen-heading">New Assignment</h2>
           <br />
           <p class="course-heading">{{user.course_code}}</p>
-          <form action="" class="new-assignment-form" method="POST" enctype="multipart/form-data">
+          <form
+            action=""
+            class="new-assignment-form"
+            method="POST"
+            enctype="multipart/form-data"
+          >
             {%csrf_token%}
             <div class="new-ass-form-field">
               <label for="title" class="title-label">Title</label>
@@ -125,7 +130,13 @@
               <label for="attachment" class="attachment-label"
                 >Attachment</label
               >
-              <input type="file" name="attachment" id="" class="attachment"  required/>
+              <input
+                type="file"
+                name="attachment"
+                id=""
+                class="attachment"
+                required
+              />
             </div>
             <button class="send-btn">SEND &Succeeds;</button>
           </form>
@@ -142,9 +153,9 @@
             <li class="dashboard-nav-li">
               <a href="{%url 'index' %}" class="dashboard-nav-link">
                 <img
-                  src="{% static '/img/pti2.png'%}"
+                  src="{% static '/img/logo-fupre.png'%}"
                   alt=""
-                  style="width: 5%"
+                  style="width: 10%"
                 />
               </a>
             </li>
@@ -167,14 +178,13 @@
                 ><span class="material-symbols-outlined"> rate_review </span></a
               >
             </li>
-            {%endif%}
+            {%endif%} {%if user.status == 'student'%}
             <li class="dashboard-nav-li">
-              <a href="#" class="dashboard-nav-link"
-                ><span class="material-symbols-outlined">
-                  settings_overscan
-                </span></a
+              <a href="{%url 'student_score_table'%}" class="dashboard-nav-link"
+                ><span class="material-symbols-outlined"> task </span></a
               >
             </li>
+            {%endif%}
             <!-- <li>
               <ul class="courses-nav-list">
                 <li class="courses-nav-li">
@@ -214,6 +224,6 @@
       </aside>
     </div>
 
-    <footer>Copyright © Powered By CSIT Group 1 2022</footer>
+    <footer>Copyright © 2023 Powered By UGBOGU SAMUEL</footer>
   </body>
 </html>

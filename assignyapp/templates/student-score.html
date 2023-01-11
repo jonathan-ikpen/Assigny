@@ -73,34 +73,31 @@
         </button>
       </header>
 
-      <main class="loggedin-page-main view-answers-table">
+      <main class="loggedin-page-main view-answers-table" style="height: 45rem">
         <table style="width: 100%">
           <thead class="table-head">
             <tr>
               <th>S/N</th>
-              <th>Name</th>
-              <th>Mat.</th>
               <th>Title</th>
-              <th>Time</th>
               <th>Score</th>
+              {% comment %}
               <th>Check</th>
+              {% endcomment %}
             </tr>
           </thead>
+
           <tbody class="table-body">
             {%for submit in submission%}
 
             <tr>
-              <td>{{forloop.counter}}</td>
-              <td>{{submit.name}}</td>
-              <td>{{submit.mat_no}}</td>
               <td>{{submit.assign_title| truncatewords:2}}</td>
-              <td>{{submit.date_created}}</td>
               {%if submit.score%}
               <td>{{submit.score}}</td>
               {%else%}
               <td>Not Marked</td>
-              {%endif%}
+              {%endif%} {% comment %}
               <td><a href="{% url 'mark_answers' submit.id%}">Open</a></td>
+              {% endcomment %}
             </tr>
             {%endfor%}
           </tbody>
