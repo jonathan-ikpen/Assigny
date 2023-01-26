@@ -76,6 +76,25 @@
           {%endfor%} <br />
           <br />
 
+          
+          <div class="score_status">
+            {%if submission%} {%for sub in submission%} {%if sub.score%}
+            <h3 >Assignment Has Been Marked</h3>
+            
+            <h2>Score: {{sub.score}}</h2>
+            {%else%}
+            <h3>Assignment Submitted but Not marked</h3>
+            {%endif%}
+            <!-- <h1>your answer is {{sub.answer}}</h1> -->
+            {%endfor%} {%else%}
+            <h3>Submit your Assignment and Get your Score</h3>
+            {%endif%}
+        </div>
+
+
+
+
+
           <h2 class="welcome-heading" style="display: block">
             {{assignment.course_code | title}}
           </h2>
@@ -191,20 +210,14 @@
                 required
               />
             </div>
+            {%if status == 'not_submitted'%}
             <button class="send-btn">SEND &Succeeds;</button>
+            {%elif status == 'submitted'%}
+            <a href="#" class="send-btn">Submitted</a>
+            {%endif%}
+            
           </form>
-          {%if submission%} {%for sub in submission%} {%if sub.score%}
-          <h1>Assignment Has Been Marked</h1>
-          <br />
-          <br />
-          <h1>Score: {{sub.score}}</h1>
-          {%else%}
-          <h1>Assignment Submitted but Not marked</h1>
-          {%endif%}
-          <!-- <h1>your answer is {{sub.answer}}</h1> -->
-          {%endfor%} {%else%}
-          <h1>Submit your assignment and Get your score</h1>
-          {%endif%}
+          
         </section>
       </main>
       <aside class="loggedin-page-aside">

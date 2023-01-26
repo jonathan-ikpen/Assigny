@@ -90,14 +90,14 @@
             {%for submit in submission%}
 
             <tr>
+              <td>{{forloop.counter}}</td>
               <td>{{submit.assign_title| truncatewords:2}}</td>
               {%if submit.score%}
               <td>{{submit.score}}</td>
               {%else%}
               <td>Not Marked</td>
-              {%endif%} {% comment %}
-              <td><a href="{% url 'mark_answers' submit.id%}">Open</a></td>
-              {% endcomment %}
+              {%endif%} 
+              
             </tr>
             {%endfor%}
           </tbody>
@@ -121,7 +121,7 @@
                 ><span class="material-symbols-outlined"> dashboard </span></a
               >
             </li>
-            {%if user.status == 'lecturer'%}
+            <!-- {%if user.status == 'lecturer'%} -->
             <li class="dashboard-nav-li">
               <a href="{%url 'assignment' %}" class="dashboard-nav-link"
                 ><span class="material-symbols-outlined">
@@ -129,19 +129,19 @@
                 </span></a
               >
             </li>
-            {%endif%} {%if user.status == 'lecturer'%}
+            <!-- {%endif%} {%if user.status == 'lecturer'%} -->
             <li class="dashboard-nav-li">
               <a href="{%url 'view_answers'%}" class="dashboard-nav-link"
                 ><span class="material-symbols-outlined"> rate_review </span></a
               >
             </li>
-            {%endif%} {%if user.status == 'student'%}
+            <!-- {%endif%} {%if user.status == 'student'%} -->
             <li class="dashboard-nav-li">
               <a href="{%url 'student_score_table'%}" class="dashboard-nav-link"
                 ><span class="material-symbols-outlined"> task </span></a
               >
             </li>
-            {%endif%}
+            <!-- {%endif%} -->
             <!-- <li>
               <ul class="courses-nav-list">
                 <li class="courses-nav-li">

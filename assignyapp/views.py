@@ -129,9 +129,20 @@ def submit(request, pk):
     submission = Student.objects.filter( user = request.user).filter(assignment = assignment.id)
 
 
+     
+    submission = Student.objects.filter( user = request.user).filter(assignment = assignment.id)
+ 
+    
+    if len(submission) == 0:
+        status = 'not_submitted'
+    else:
+        status = 'submitted'
+        
+        
     context = {
             "assignment": assignment,
-            "submission": submission
+            "submission": submission,
+            "status": status,
         }
     due_date = timezone.datetime.now()
     due_assignments = Lecturer.objects.filter(due__lt = due_date).delete()
@@ -269,9 +280,16 @@ def profile(request):
     return render(request, 'profile.html')
 
 
+
+
+
 @login_required(login_url = 'signin')
 def student_score_table(request):
-    return render(request, 'student-score.html')
+    submission = Student.objects.filter(user = request.user)
+    context = {
+        'submission': submission
+    }
+    return render(request, 'student-score.html', context)
 
 
 
