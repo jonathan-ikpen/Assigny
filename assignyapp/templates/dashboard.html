@@ -48,7 +48,8 @@
     ></script>
 
     <!-- Main JavaScript File -->
-    <script defer src="/dist/bundle.js"></script>
+    {% comment %} <script defer src="/dist/bundle.js"></script> {% endcomment %}
+    <script defer src="{% static '/scripts/main.js'%}"></script>
     <title>Lecturer dashboard</title>
   </head>
   <body>
@@ -67,9 +68,6 @@
           </ul>
         </nav>
       </header>
-
-
-      
 
       <main class="loggedin-page-main" id="student-main">
         
@@ -102,7 +100,7 @@
         </section>
         {%endfor%}
         {%else%}
-        <h1 style="text-align: center">No Assignments Yet</h1>
+        <h1 style="text-align: center; grid-column: 1/-1; margin: 8rem 7rem 0 7rem; color: #fff; background-color: #e52a5a; padding: 1rem; border-radius: 5px;">No Assignments Yet</h1>
         {%endif%}
          {%elif user.status == 'lecturer'%}
         <section id="lecturer-main">

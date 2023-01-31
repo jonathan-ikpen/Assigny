@@ -50,7 +50,10 @@
     ></script>
 
     <!-- Main JavaScript File -->
+    {% comment %}
     <script defer src="/dist/bundle.js"></script>
+    {% endcomment %}
+    <script defer src="{% static '/scripts/dashboard.js'%}"></script>
     <title>Student dashboard</title>
   </head>
   <body>
@@ -72,28 +75,46 @@
       <main class="loggedin-page-main">
         <section class="new-assignment container">
           {%for message in messages%}
-          <h3>{{message}}</h3>
-          {%endfor%} <br />
+          <h3
+            style="
+              text-align: center;
+              color: #fff;
+              background-color: #e52a5a;
+              padding: 1rem 2rem 1rem 2rem;
+              border-radius: 5px;
+              width: fit-content;
+            "
+          >
+            {{message}}
+          </h3>
+          {%endfor%}
           <br />
+          {%if submission%} {%for sub in submission%} {%if sub.score%}
+          <h3
+            style="
+              text-align: center;
+              color: #fff;
+              background-color: #e52a5a;
+              padding: 1rem 2rem 1rem 2rem;
+              border-radius: 5px;
+              width: fit-content;
+            "
+          >
+            Assignment Has Been Marked
+          </h3>
+          {%endif%} {%endfor%} {%endif%}
 
-          
           <div class="score_status">
             {%if submission%} {%for sub in submission%} {%if sub.score%}
-            <h3 >Assignment Has Been Marked</h3>
-            
             <h2>Score: {{sub.score}}</h2>
             {%else%}
-            <h3>Assignment Submitted but Not marked</h3>
+            <h3>Not <span style="color: #e52a5a">scored</span></h3>
             {%endif%}
             <!-- <h1>your answer is {{sub.answer}}</h1> -->
             {%endfor%} {%else%}
-            <h3>Submit your Assignment and Get your Score</h3>
+            <!-- <h3>Submit your Assignment and Get your Score</h3> -->
             {%endif%}
-        </div>
-
-
-
-
+          </div>
 
           <h2 class="welcome-heading" style="display: block">
             {{assignment.course_code | title}}
@@ -125,64 +146,64 @@
               <p class="assignment-desc">{{assignment.description}}</p>
 
               <label><strong>Attachment:</strong></label>
-              {%if assignment.attachment%}
+              <div style="display: flex; gap: 10px; height: 3.5rem">
+                {%if assignment.attachment%}
 
-              <img
-                src="{% static '/img/attachment.png'%}"
-                alt=""
-                style="width: 5%"
-              />
+                <img
+                  src="{% static '/img/attachment.png'%}"
+                  alt=""
+                  class="attachment-img"
+                />
 
-              <!-- view -->
-              <a
-                href="{{assignment.attachment.url}}"
-                target="_blank"
-                class="btn btn-info"
-                style="width: 5%"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-eye"
-                  viewBox="0 0 16 16"
+                <!-- view -->
+                <a
+                  href="{{assignment.attachment.url}}"
+                  target="_blank"
+                  class="btn btn-info attachment-img"
                 >
-                  <path
-                    d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
-                  />
-                  <path
-                    d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"
-                  />
-                </svg>
-              </a>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-eye"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
+                    />
+                    <path
+                      d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"
+                    />
+                  </svg>
+                </a>
 
-              <!-- download -->
+                <!-- download -->
 
-              <a
-                href="{{assignment.attachment.url}}"
-                download="{{answers.attachment.url}}"
-                class="btn btn-success"
-                style="width: 5%"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-download"
-                  viewBox="0 0 16 16"
+                <a
+                  href="{{assignment.attachment.url}}"
+                  download="{{answers.attachment.url}}"
+                  class="btn btn-success attachment-img"
                 >
-                  <path
-                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
-                  />
-                  <path
-                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
-                  />
-                </svg>
-              </a>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-download"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+                    />
+                    <path
+                      d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+                    />
+                  </svg>
+                </a>
 
-              {%endif%}
+                {%endif%}
+              </div>
 
               <textarea
                 id=""
@@ -213,11 +234,21 @@
             {%if status == 'not_submitted'%}
             <button class="send-btn">SEND &Succeeds;</button>
             {%elif status == 'submitted'%}
-            <a href="#" class="send-btn">Submitted</a>
+            <a
+              href="javascript:void(0)"
+              class="send-btn"
+              style="
+                background: #e7e7e7;
+                color: #3333;
+                cursor: pointer;
+                pointer-events: none;
+              "
+              title="🚫"
+              disabled
+              >Submitted</a
+            >
             {%endif%}
-            
           </form>
-          
         </section>
       </main>
       <aside class="loggedin-page-aside">
@@ -297,7 +328,6 @@
       </aside>
     </div>
     <footer>Copyright © 2023 Powered By UGBOGU SAMUEL</footer>
-
     <script src="{%static 'js\bootstrap.min.js'%}"></script>
   </body>
 </html>

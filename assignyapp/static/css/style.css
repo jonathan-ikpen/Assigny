@@ -305,7 +305,7 @@ footer {
 
 .new-assignment {
   /* padding-top: 9.6rem; */
-  padding: 1rem 10rem;
+  padding: 1rem 5rem !important;
 }
 
 .new-assignment-form {
@@ -319,6 +319,10 @@ footer {
   display: grid;
   gap: 5px;
   /* width: 80%; */
+}
+
+.attachment-img {
+  width: 5% !important;
 }
 
 .new-ass-form-field:nth-child(4) {
@@ -361,9 +365,10 @@ footer {
   height: fit-content;
   align-self: end;
   text-transform: lowercase;
-  font-weight: 600;
+  /* font-weight: 600; */
+  font-size: 16px;
   text-decoration: none;
-  padding: 0.6rem 1rem;
+  padding: 1rem 3rem;
   color: #333;
   /* background-color: #66757f; */
   background-image: linear-gradient(to top left, #35c48d, #a2f559);
@@ -374,6 +379,8 @@ footer {
   margin-left: auto;
   /* margin-bottom: 8rem; */
   grid-column: 2;
+  cursor: pointer;
+  color: #fff;
 }
 
 /* REGISTER FORM */
@@ -409,7 +416,6 @@ footer {
   border: 1px solid #66757f;
 }
 
-
-.score_status{
+.score_status {
   margin-left: 72%;
 }

@@ -1,6 +1,32 @@
+@media screen and (max-width: 912px) {
+  .home {
+    background-position: 16% 50%;
+  }
+
+  .attachment-img {
+    width: 10% !important;
+  }
+}
+
+@media screen and (max-width: 10280px) {
+  .new-ass-form-field:nth-child(5) {
+    grid-column: 1/2;
+  }
+
+  .attachment-img {
+    width: 5% !important;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .attachment-img {
+    width: 10% !important;
+  }
+}
+
 @media screen and (max-width: 414px) {
   .logo {
-    width: 40%;
+    width: 10%;
   }
 
   .home {
@@ -14,30 +40,22 @@
   }
 
   .new-assignment {
-    padding: 2rem;
+    padding: 2rem !important;
   }
 
   .new-assignment-form {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 
   .new-ass-form-field {
-    grid-column: 1/2;
+    grid-column: 1/2 !important;
+  }
+
+  .attachment-img {
+    width: 10% !important;
   }
 
   .send-btn {
-    grid-column: 1/2;
-  }
-}
-
-@media screen and (max-width: 912px) {
-  .home {
-    background-position: 16% 50%;
-  }
-}
-
-@media screen and (max-width: 10280px) {
-  .new-ass-form-field:nth-child(5) {
     grid-column: 1/2;
   }
 }

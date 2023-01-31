@@ -73,14 +73,20 @@
         </button>
       </header>
       <main class="loggedin-page-main">
-        <!-- <div class="container home">
-          <h1 class="home-text">Assigny Online Assignment System</h1>
-          <p class="sub-home-text">Login/Register to get started</p>
-        </div> -->
-
         <section class="new-assignment container">
           {%for message in messages%}
-          <h3>{{message}}</h3>
+          <h1
+            style="
+              text-align: center;
+              color: #fff;
+              background-color: #e52a5a;
+              padding: 1rem 2rem 1rem 2rem;
+              border-radius: 5px;
+              width: fit-content;
+            "
+          >
+            {{message}}
+          </h1>
           {%endfor%} <br />
           <br />
           <h2 class="gen-heading">New Assignment</h2>
@@ -140,11 +146,6 @@
             </div>
             <button class="send-btn">SEND &Succeeds;</button>
           </form>
-          {% comment %}
-          <a href="{%url 'dashboard' %}" class="main-nav-link nav-cta"
-            >Go to Dashboard</a
-          >
-          {% endcomment %}
         </section>
       </main>
       <aside class="loggedin-page-aside">
