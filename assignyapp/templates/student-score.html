@@ -78,6 +78,7 @@
           <thead class="table-head">
             <tr>
               <th>S/N</th>
+              <th>Course</th>
               <th>Title</th>
               <th>Score</th>
               {% comment %}
@@ -91,13 +92,13 @@
 
             <tr>
               <td>{{forloop.counter}}</td>
-              <td>{{submit.assign_title| truncatewords:2}}</td>
+              <td>{{submit.course_code}}</td>
+              <td>{{submit.assign_title| truncatewords:4}}</td>
               {%if submit.score%}
               <td>{{submit.score}}</td>
               {%else%}
               <td>Not Marked</td>
-              {%endif%} 
-              
+              {%endif%}
             </tr>
             {%endfor%}
           </tbody>
