@@ -73,34 +73,32 @@
         </button>
       </header>
 
-      <main class="loggedin-page-main view-answers-table">
+      <main class="loggedin-page-main view-answers-table" style="height: 45rem">
         <table style="width: 100%">
           <thead class="table-head">
             <tr>
               <th>S/N</th>
-              <th>Name</th>
-              <th>Mat.</th>
+              <th>Course</th>
               <th>Title</th>
-              <th>Time Of Submission</th>
               <th>Score</th>
+              {% comment %}
               <th>Check</th>
+              {% endcomment %}
             </tr>
           </thead>
+
           <tbody class="table-body">
             {%for submit in submission%}
 
             <tr>
               <td>{{forloop.counter}}</td>
-              <td>{{submit.name}}</td>
-              <td>{{submit.mat_no}}</td>
-              <td>{{submit.assign_title| truncatewords:2}}</td>
-              <td>{{submit.date_created}}</td>
+              <td>{{submit.course_code}}</td>
+              <td>{{submit.assign_title| truncatewords:4}}</td>
               {%if submit.score%}
               <td>{{submit.score}}</td>
               {%else%}
               <td>Not Marked</td>
               {%endif%}
-              <td><a href="{% url 'mark_answers' submit.id%}">Open</a></td>
             </tr>
             {%endfor%}
           </tbody>
@@ -124,7 +122,7 @@
                 ><span class="material-symbols-outlined"> dashboard </span></a
               >
             </li>
-            {%if user.status == 'lecturer'%}
+            <!-- {%if user.status == 'lecturer'%} -->
             <li class="dashboard-nav-li">
               <a href="{%url 'assignment' %}" class="dashboard-nav-link"
                 ><span class="material-symbols-outlined">
@@ -132,19 +130,19 @@
                 </span></a
               >
             </li>
-            {%endif%} {%if user.status == 'lecturer'%}
+            <!-- {%endif%} {%if user.status == 'lecturer'%} -->
             <li class="dashboard-nav-li">
               <a href="{%url 'view_answers'%}" class="dashboard-nav-link"
                 ><span class="material-symbols-outlined"> rate_review </span></a
               >
             </li>
-            {%endif%} {%if user.status == 'student'%}
+            <!-- {%endif%} {%if user.status == 'student'%} -->
             <li class="dashboard-nav-li">
               <a href="{%url 'student_score_table'%}" class="dashboard-nav-link"
                 ><span class="material-symbols-outlined"> task </span></a
               >
             </li>
-            {%endif%}
+            <!-- {%endif%} -->
             <!-- <li>
               <ul class="courses-nav-list">
                 <li class="courses-nav-li">

@@ -101,7 +101,6 @@
                       <a href="{%url 'submit' assign.id%}" class="turn-in-btn">Turn In</a>
 
                   
-                    <h2>mat : {{assign.mat_no}}</h2>
 
 
                     
@@ -223,6 +222,13 @@
               <a href="{%url 'view_assignments'%}" class="dashboard-nav-link"
                 ><span class="material-symbols-outlined">
                   library_books
+                </span></a
+              >
+            </li>
+            <li class="dashboard-nav-li">
+              <a href="{%url 'student_score_table'%}" class="dashboard-nav-link"
+                ><span class="material-symbols-outlined">
+                  Scores
                 </span></a
               >
             </li>

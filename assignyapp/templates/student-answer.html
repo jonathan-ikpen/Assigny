@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{%static '/css/style.css'%}" />
     <link rel="stylesheet" href="{%static '/css/dashboard.css'%}" />
     <link rel="stylesheet" href="{%static '/css/queries.css'%}" />
-    <link rel="stylesheet" href="{%static 'cssb\bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{%static 'cssb\bootstrap.min.css'%}" />
 
     <link rel="shortcut icon" href="#" type="image/x-icon" />
 
@@ -50,14 +50,17 @@
     ></script>
 
     <!-- Main JavaScript File -->
+    {% comment %}
     <script defer src="/dist/bundle.js"></script>
+    {% endcomment %}
+    <script defer src="{% static '/scripts/dashboard.js'%}"></script>
     <title>Student dashboard</title>
   </head>
   <body>
     <div class="loggedin-page">
       <header class="loggedin-page-header">
         <a href="{%url 'index'%}">
-          <img src="{% static '/img/logo2.png'%}" alt="" class="logo" />
+          <img src="{% static '/img/logo-fupre.png'%}" alt="" class="logo" />
         </a>
         <nav class="main-nav">
           <ul class="main-nav-list">
@@ -72,9 +75,46 @@
       <main class="loggedin-page-main">
         <section class="new-assignment container">
           {%for message in messages%}
-          <h3>{{message}}</h3>
-          {%endfor%} <br />
+          <h3
+            style="
+              text-align: center;
+              color: #fff;
+              background-color: #e52a5a;
+              padding: 1rem 2rem 1rem 2rem;
+              border-radius: 5px;
+              width: fit-content;
+            "
+          >
+            {{message}}
+          </h3>
+          {%endfor%}
           <br />
+          {%if submission%} {%for sub in submission%} {%if sub.score%}
+          <h3
+            style="
+              text-align: center;
+              color: #fff;
+              background-color: #e52a5a;
+              padding: 1rem 2rem 1rem 2rem;
+              border-radius: 5px;
+              width: fit-content;
+            "
+          >
+            Assignment Has Been Marked
+          </h3>
+          {%endif%} {%endfor%} {%endif%}
+
+          <div class="score_status">
+            {%if submission%} {%for sub in submission%} {%if sub.score%}
+            <h2>Score: {{sub.score}}</h2>
+            {%else%}
+            <h3>Not <span style="color: #e52a5a">scored</span></h3>
+            {%endif%}
+            <!-- <h1>your answer is {{sub.answer}}</h1> -->
+            {%endfor%} {%else%}
+            <!-- <h3>Submit your Assignment and Get your Score</h3> -->
+            {%endif%}
+          </div>
 
           <h2 class="welcome-heading" style="display: block">
             {{assignment.course_code | title}}
@@ -82,7 +122,12 @@
           <br />
           <!-- <p class="answer-title small-heading">Assignment 1</p> -->
 
-          <form action="" class="new-assignment-form" method="POST" enctype="multipart/form-data">
+          <form
+            action=""
+            class="new-assignment-form"
+            method="POST"
+            enctype="multipart/form-data"
+          >
             {%csrf_token%}
             <div class="new-ass-form-field">
               <p class="assignment-deadline">Deadline: {{assignment.due}}</p>
@@ -100,39 +145,65 @@
               </label>
               <p class="assignment-desc">{{assignment.description}}</p>
 
-              <Label><Strong>Attachment:</Strong></Label>
-              {%if assignment.attachment%}
+              <label><strong>Attachment:</strong></label>
+              <div style="display: flex; gap: 10px; height: 3.5rem">
+                {%if assignment.attachment%}
 
-              <img
-              src="{% static '/img/attachment.png'%}"
-              alt=""
-              style="width: 5%"/>
+                <img
+                  src="{% static '/img/attachment.png'%}"
+                  alt=""
+                  class="attachment-img"
+                />
 
-
-              <!-- view -->
-              <a href="{{assignment.attachment.url}}"  target="_blank" class="btn btn-info" style="width: 5%">
-
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                <!-- view -->
+                <a
+                  href="{{assignment.attachment.url}}"
+                  target="_blank"
+                  class="btn btn-info attachment-img"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-eye"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
+                    />
+                    <path
+                      d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"
+                    />
                   </svg>
+                </a>
 
-            </a>
+                <!-- download -->
 
+                <a
+                  href="{{assignment.attachment.url}}"
+                  download="{{answers.attachment.url}}"
+                  class="btn btn-success attachment-img"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-download"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+                    />
+                    <path
+                      d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+                    />
+                  </svg>
+                </a>
 
-            <!-- download -->
-
-            <a href="{{assignment.attachment.url}}"  download = '{{answers.attachment.url}}'class="btn btn-success" style="width: 5%">
-
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                </svg>
-
-          </a>
-
-              {%endif%}
-
+                {%endif%}
+              </div>
 
               <textarea
                 id=""
@@ -152,26 +223,34 @@
               <label for="attachment" class="attachment-label"
                 >Attachment</label
               >
-              <input type="file" name="attachment" id="" class="attachment"  required/>
+              <input
+                type="file"
+                name="attachment"
+                id=""
+                class="attachment"
+              />
             </div>
             {%if status == 'not_submitted'%}
             <button class="send-btn">SEND &Succeeds;</button>
             {%elif status == 'submitted'%}
-            <a href="#" class="turn-in-btn">Submitted</a>
+
+
+            <a
+              href="javascript:void(0)"
+              class="send-btn"
+              style="
+                background: #e7e7e7;
+                color: #3333;
+                cursor: pointer;
+                pointer-events: none;
+              "
+              title="🚫"
+              disabled
+              >Submitted</a
+            >
+
             {%endif%}
           </form>
-          {%if submission%} {%for sub in submission%} {%if sub.score%}
-          <h1>Assignment Has Been Marked</h1>
-          <br />
-          <br />
-          <h1>Score: {{sub.score}}</h1>
-          {%else%}
-          <h1>Assignment Submitted but Not marked</h1>
-          {%endif%}
-          <!-- <h1>your answer is {{sub.answer}}</h1> -->
-          {%endfor%} {%else%}
-          <h1>Submit your assignment and Get your score</h1>
-          {%endif%}
         </section>
       </main>
       <aside class="loggedin-page-aside">
@@ -180,9 +259,9 @@
             <li class="dashboard-nav-li">
               <a href="{%url 'index' %}" class="dashboard-nav-link">
                 <img
-                  src="{% static '/img/pti2.png'%}"
+                  src="{% static '/img/logo-fupre.png'%}"
                   alt=""
-                  style="width: 5%"
+                  style="width: 10%"
                 />
               </a>
             </li>
@@ -205,14 +284,13 @@
                 ><span class="material-symbols-outlined"> rate_review </span></a
               >
             </li>
-            {%endif%}
+            {%endif%} {%if user.status == 'student'%}
             <li class="dashboard-nav-li">
-              <a href="#" class="dashboard-nav-link"
-                ><span class="material-symbols-outlined">
-                  settings_overscan
-                </span></a
+              <a href="{%url 'student_score_table'%}" class="dashboard-nav-link"
+                ><span class="material-symbols-outlined"> task </span></a
               >
             </li>
+            {%endif%}
             <!-- <li>
               <ul class="courses-nav-list">
                 <li class="courses-nav-li">
@@ -251,10 +329,7 @@
         </nav>
       </aside>
     </div>
-    <footer>Copyright © Powered By CSIT Group 1 2022</footer>
-
-
+    <footer>Copyright © 2023 Powered By UGBOGU SAMUEL</footer>
     <script src="{%static 'js\bootstrap.min.js'%}"></script>
-
   </body>
 </html>

@@ -63,7 +63,10 @@ def assignment(request):
         title = request.POST["title"]
         description = request.POST["description"]
         datetime = request.POST["datetime"]
-        attachment = request.FILES['attachment']
+        try:
+            attachment =  request.FILES['attachment'] 
+        except:
+            attachment = None
         course_code = request.user.course_code
         user = request.user
         # mat_no = submit.mat_no
@@ -100,7 +103,12 @@ def submit(request, pk):
     Lect = Lecturer.objects.filter(id = pk).update(mat_no = request.user.mat_no)
     if request.method == "POST":
         answer = request.POST['answer']
-        attachment = request.FILES['attachment']
+         
+        try:
+            attachment =  request.FILES['attachment'] 
+        except:
+            attachment = None
+            
         mat_no = request.user.mat_no
         name = request.user.first_name + ' ' + request.user.last_name
         course_code = assignment.course_code
@@ -130,8 +138,14 @@ def submit(request, pk):
     else:
         status = 'submitted'
         
+        
+    
+        
+        
     
     verify = Lecturer.objects.filter(id = pk).update(submit_status = status)
+    
+  
     
     
     context = {
@@ -147,6 +161,18 @@ def submit(request, pk):
 
 
 @login_required(login_url = 'signin')
+def add_attachment(request,pk):
+    status = Student.objects.filter(id = pk).update(check = True)
+    return render(request, "student-answer.html")
+    
+    
+    
+    
+    
+    
+    
+    
+@login_required(login_url = 'signin')
 def dashboard(request):
 
     # ASSIGNMENTS POSTED BY LECTURER
@@ -154,10 +180,15 @@ def dashboard(request):
 
     # ASSIGNMENTS SUBMITTED BY STUDENTS
     submit = Student.objects.filter(user = request.user)
-    Lect = Lecturer.objects.update(mat_no = request.user.mat_no)
+    # Lect = Lecturer.objects.update(mat_no = request.user.mat_no)
+    
+    # for i in submit:
+    #     print(i.id)
+    #     sub = Student.objects.filter(id = i.id)
+    #     assignment = Lecturer.objects.all()
     
     
-    assignment = Lecturer.objects.filter(mat_no = request.user.mat_no)
+    assignment = Lecturer.objects.all()
     
     
     
@@ -241,9 +272,9 @@ def delete(request, pk):
 def student_scores(request,):
     scores = Student.objects.filter(user = request.user)
     context = {
-        'scores': scores
+        'submission': scores
     }
-    return render(request, 'student_scores.html', context)
+    return render(request, 'student-score.html', context)
 
 
 
