@@ -154,7 +154,11 @@
               >
               <input type="file" name="attachment" id="" class="attachment"  required/>
             </div>
+            {%if status == 'not_submitted'%}
             <button class="send-btn">SEND &Succeeds;</button>
+            {%elif status == 'submitted'%}
+            <a href="#" class="turn-in-btn">Submitted</a>
+            {%endif%}
           </form>
           {%if submission%} {%for sub in submission%} {%if sub.score%}
           <h1>Assignment Has Been Marked</h1>

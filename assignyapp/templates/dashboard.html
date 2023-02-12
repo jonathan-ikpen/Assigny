@@ -80,73 +80,111 @@
         </div> -->
 
         {%if user.status == 'student'%}
+
+        
  
-        {%if assignment%}
-        {%for assign in assignment reversed%}
+          {%if assignment%}
+          
+            {%for assign in assignment reversed%}
 
-        <section >
-           <div class="course-temp">
-            <h3 class="course-temp---heading" style="text-transform: uppercase;">{{assign.course_code}}</h3>
-            <div class="course-temp-main">
-              <div class="course-temp-main--text">
-                <h4 class="course-temp---head">{{assign.title}}</h4>
-                <span class="course-temp---text" style="color: #fb79a7;">Deadline: {{assign.due}}</span>
+            
+
+            <section >
+              <div class="course-temp">
+                <h3 class="course-temp---heading" style="text-transform: uppercase;">{{assign.course_code}}</h3>
+                <div class="course-temp-main">
+                  <div class="course-temp-main--text">
+                    <h4 class="course-temp---head">{{assign.title}}</h4>
+                    <span class="course-temp---text" style="color: #fb79a7;">Deadline: {{assign.due}}</span>
 
 
-                <a href="{%url 'submit' assign.id%}" class="turn-in-btn">Turn In</a>
-              </div>
-              <div class="course-temp-main--img">
-                <img src="{% static '/img/notes-icon-design-vector.jpg'%}" style="width: 50%; height: 100px;" alt="">
-              </div>
-            </div>
-        </section>
-        {%endfor%}
-        {%else%}
-        <h2>No Assignments Yet</h2>
-        {%endif%}
-         {%elif user.status == 'lecturer'%}
-        <section id="lecturer-main">
-          <a href="{%url 'assignment' %}" class="course-temp" style="background-image: linear-gradient(to top left, #ffb003, #ffcb03);">
-            <h3 class="course-temp---heading">Upload An Assignment</h3>
-          </a>
+                      <a href="{%url 'submit' assign.id%}" class="turn-in-btn">Turn In</a>
 
-          <a href="{%url 'view_answers'%}" class="course-temp" style="background-image: linear-gradient(to top left, #35c48d, #a2f559);">
-            <h3 class="course-temp---heading">View Answers</h3>
-          </a>
+                  
+                    <h2>mat : {{assign.mat_no}}</h2>
 
-          <a href="{%url 'view_assignments'%}" class="course-temp" style="background-image: linear-gradient(to top left, #e52a5a, #ff585f);">
-            <h3 class="course-temp---heading">View Uploaded Assignments</h3>
-          </a>
-        </section>
-        {%endif%}
-      </main>
 
-      <aside class="loggedin-page-aside">
-        <nav class="dashboard-nav">
-          <ul class="dashboard-nav-list">
-            <li class="dashboard-nav-li">
-              <a href="{%url 'index' %}" class="dashboard-nav-link">
-                <img
-                  src="{% static '/img/pti2.png'%}"
-                  alt=""
-                  style="width: 5%"
-                />
-              </a>
-            </li>
-            <li class="dashboard-nav-li">
-              <a href="{%url 'dashboard' %}" class="dashboard-nav-link"
-                ><span class="material-symbols-outlined"> dashboard </span></a
-              >
-            </li>
+                    
+
+
+
+                  </div>
+                  <div class="course-temp-main--img">
+                    <img src="{% static '/img/notes-icon-design-vector.jpg'%}" style="width: 50%; height: 100px;" alt="">
+                  </div>
+                </div>
+            </section>
+            {%endfor%}
+          {%else%}
+          <h2>No Assignments Yet</h2>
+          {%endif%}
+
+         
+          <h2>{{identity}}</h2>
+
+          <h1>{{assignment.identity}}</h1>
+
+        
+
+
+          {%elif user.status == 'lecturer'%}
+          <section id="lecturer-main">
+            <a href="{%url 'assignment' %}" class="course-temp" style="background-image: linear-gradient(to top left, #ffb003, #ffcb03);">
+              <h3 class="course-temp---heading">Upload An Assignment</h3>
+            </a>
+
+            <a href="{%url 'view_answers'%}" class="course-temp" style="background-image: linear-gradient(to top left, #35c48d, #a2f559);">
+              <h3 class="course-temp---heading">View Answers</h3>
+            </a>
+
+            <a href="{%url 'view_assignments'%}" class="course-temp" style="background-image: linear-gradient(to top left, #e52a5a, #ff585f);">
+              <h3 class="course-temp---heading">View Uploaded Assignments</h3>
+            </a>
+          </section>
+          {%endif%}
+        </main>
+
+        <aside class="loggedin-page-aside">
+          <nav class="dashboard-nav">
+            <ul class="dashboard-nav-list">
+              <li class="dashboard-nav-li">
+                <a href="{%url 'index' %}" class="dashboard-nav-link">
+                  <img
+                    src="{% static '/img/pti2.png'%}"
+                    alt=""
+                    style="width: 5%"
+                  />
+                </a>
+              </li>
+              <li class="dashboard-nav-li">
+                <a href="{%url 'dashboard' %}" class="dashboard-nav-link"
+                  ><span class="material-symbols-outlined"> dashboard </span></a
+                >
+              </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              {%if user.status == 'lecturer'%}
+              <li class="dashboard-nav-li">
+                <a href="{%url 'assignment' %}" class="dashboard-nav-link"
+                  ><span class="material-symbols-outlined">
+                    assignment_add
+                  </span></a
+                >
+              </li>
+              {%endif%} 
+
             {%if user.status == 'lecturer'%}
-            <li class="dashboard-nav-li">
-              <a href="{%url 'assignment' %}" class="dashboard-nav-link"
-                ><span class="material-symbols-outlined">
-                  assignment_add
-                </span></a
-              >
-            </li>
-            {%endif%} {%if user.status == 'lecturer'%}
             <li class="dashboard-nav-li">
               <a href="{%url 'view_answers'%}" class="dashboard-nav-link"
                 ><span class="material-symbols-outlined"> rate_review </span></a

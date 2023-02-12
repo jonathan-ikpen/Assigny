@@ -51,10 +51,12 @@
 
     <!-- Main JavaScript File -->
     <script defer src="/dist/bundle.js"></script>
-    <title>Assigny</title>
+    <title>Assigny     </title>
   </head>
   <body>
+    
     <header class="header">
+   
       <a href="{%url 'index'%}">
         <img src="{% static '/img/logo2.png'%}" alt="" class="logo" />
       </a>
@@ -85,6 +87,12 @@
         <h1 class="home-text">Online Assignment Submission</h1>
         <!-- <p class="sub-home-text">Login/Register to get started</p> -->
         <br /><br />
+
+        {%for i in id%}
+        <h1>id = {{i}}</h1> 
+        {%endfor%}  
+
+        
         {%if user.is_authenticated%}
         <a href="{%url 'dashboard' %}" class="main-nav-link nav-cta dashBtn"
           >Go to Dashboard</a

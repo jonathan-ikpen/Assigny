@@ -68,7 +68,9 @@
         </nav>
       </header>
 
-      {%if assignments%} {%for assignment in assignments reversed%}
+      {%if assignments%} 
+      
+      {%for assignment in assignments reversed%}
       <section id="student-main">
         <div class="course-temp">
           <h3 class="course-temp---heading">{{assignment.course_code}}</h3>
@@ -79,15 +81,18 @@
                 >Deadline: {{assignment.due}}</span
               >
               <a
-                href="{%url 'delete_assignments' assignment.id%}"
+                href="{%url 'delete' assignment.id%}"
                 class="turn-in-btn"
-                >Remove</a
-              >
+                >Remove
+              </a>
+              
             </div>
           </div>
         </div>
       </section>
-      {%endfor%} {%else%}
+      {%endfor%} 
+      
+      {%else%}
       <p
         style="
           text-align: center;
@@ -102,6 +107,24 @@
         No Assignment Uploaded Yet !!
       </p>
       {%endif%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <aside class="loggedin-page-aside">
         <nav class="dashboard-nav">
           <ul class="dashboard-nav-list">
@@ -161,7 +184,7 @@
                 </span></a
               >
             </li>
-            {%if user.status == 'student'%}
+            <!-- {%if user.status == 'student'%}
             <li class="dashboard-nav-li">
               <a href="{%url 'view_assignments'%}" class="dashboard-nav-link"
                 ><span class="material-symbols-outlined">
@@ -169,7 +192,7 @@
                 </span></a
               >
             </li>
-            {%endif%}
+            {%endif%} -->
             <li class="dashboard-nav-li">
               <a href="#" class="dashboard-nav-link">
                 <span class="material-symbols-outlined"> settings </span>

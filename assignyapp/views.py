@@ -14,6 +14,7 @@ from django.utils import timezone
 
 
 def index(request):
+    print('=========='+ str(request.session.get('p')))
     due_date = timezone.datetime.now()
     due_assignments = Lecturer.objects.filter(due__lt = due_date).delete()
     return render(request, 'index.html')
@@ -23,32 +24,7 @@ def index(request):
 
 
 
-@login_required(login_url = 'signin')
-def assignment(request):
-    if request.method == "POST":
-        title = request.POST["title"]
-        description = request.POST["description"]
-        datetime = request.POST["datetime"]
-        attachment = request.FILES['attachment']
-        course_code = request.user.course_code
-        user = request.user
 
-        courses =Lecturer.objects.create(
-            title = title,
-            description = description,
-            due = datetime,
-            course_code = course_code,
-            attachment = attachment,
-            user = user
-        
-        )
-        courses.save()
-        messages.success(request, "Assignment Uploaded Successfully!!!")
-        
-    due_date = timezone.datetime.now()
-    due_assignments = Lecturer.objects.filter(due__lt = due_date).delete()
-
-    return render(request, 'upload-a-question.html')
 
 
 
@@ -79,22 +55,35 @@ def view_answers(request):
 
 
 @login_required(login_url = 'signin')
-def dashboard(request):
 
-    # ASSIGNMENTS POSTED BY LECTURER
-    assignment = Lecturer.objects.all()
-
-    # ASSIGNMENTS SUBMITTED BY STUDENTS
-    submit = Student.objects.all()
-
-    context = {
-        "assignment": assignment,
-        "submit": submit,
-    }
+def assignment(request):
     
+    # submit = Student.objects.get(id = pk)
+    if request.method == "POST":
+        title = request.POST["title"]
+        description = request.POST["description"]
+        datetime = request.POST["datetime"]
+        attachment = request.FILES['attachment']
+        course_code = request.user.course_code
+        user = request.user
+        # mat_no = submit.mat_no
+
+        courses =Lecturer.objects.create(
+            title = title,
+            description = description,
+            due = datetime,
+            course_code = course_code,
+            attachment = attachment,
+            user = user,
+            # mat_no = mat_no
+        )
+        courses.save()
+        messages.success(request, "Assignment Uploaded Successfully!!!")
+        
     due_date = timezone.datetime.now()
     due_assignments = Lecturer.objects.filter(due__lt = due_date).delete()
-    return render(request, "dashboard.html", context)
+
+    return render(request, 'upload-a-question.html')
 
 
 
@@ -102,8 +91,13 @@ def dashboard(request):
 
 @login_required(login_url = 'signin')
 def submit(request, pk):
-
+    
+   
+   
     assignment = Lecturer.objects.get(id = pk)
+    
+    
+    Lect = Lecturer.objects.filter(id = pk).update(mat_no = request.user.mat_no)
     if request.method == "POST":
         answer = request.POST['answer']
         attachment = request.FILES['attachment']
@@ -124,18 +118,60 @@ def submit(request, pk):
         )
         submit.save()
         messages.success(request, "Assignment Submitted Successfully!!!")
+        
+    
 
-
+ 
     submission = Student.objects.filter( user = request.user).filter(assignment = assignment.id)
-
-
+ 
+    
+    if len(submission) == 0:
+        status = 'not_submitted'
+    else:
+        status = 'submitted'
+        
+    
+    verify = Lecturer.objects.filter(id = pk).update(submit_status = status)
+    
+    
     context = {
             "assignment": assignment,
-            "submission": submission
+            "submission": submission,
+            "status": status,
         }
     due_date = timezone.datetime.now()
     due_assignments = Lecturer.objects.filter(due__lt = due_date).delete()
     return render(request, "student-answer.html", context)
+
+
+
+
+@login_required(login_url = 'signin')
+def dashboard(request):
+
+    # ASSIGNMENTS POSTED BY LECTURER
+    
+
+    # ASSIGNMENTS SUBMITTED BY STUDENTS
+    submit = Student.objects.filter(user = request.user)
+    Lect = Lecturer.objects.update(mat_no = request.user.mat_no)
+    
+    
+    assignment = Lecturer.objects.filter(mat_no = request.user.mat_no)
+    
+    
+    
+    
+    context = {
+        "assignment": assignment,
+        # "submitted": submitted,
+        "submit": submit,
+    }
+    
+    due_date = timezone.datetime.now()
+    due_assignments = Lecturer.objects.filter(due__lt = due_date).delete()
+    return render(request, "dashboard.html", context)
+
 
 
 
@@ -150,7 +186,7 @@ def mark_answers(request, pk):
     if request.method == "POST":
         score = request.POST['mark']
     
-        score = Student.objects.filter(id = pk).update(score = score)
+        scores = Student.objects.filter(id = pk).update(score = score)
         messages.success(request, "Score Has Been Added Successfully!!!")
 
   
@@ -189,10 +225,25 @@ def view_assignments(request):
 
 
 @login_required(login_url = 'signin')
-def delete_assignments(request, pk):
+def delete(request, pk):
     assignments = Lecturer.objects.get(id = pk)
     assignments.delete()
     return redirect("view_assignments")
+
+
+
+
+
+
+
+
+@login_required(login_url = 'signin')
+def student_scores(request,):
+    scores = Student.objects.filter(user = request.user)
+    context = {
+        'scores': scores
+    }
+    return render(request, 'student_scores.html', context)
 
 
 
@@ -261,7 +312,14 @@ def signin(request):
         return render(request, 'signin.html')
     else:
         return redirect('dashboard')
+    
+    
+    
 
+def refresh(request, pk):
+    assignment = Lecturer.objects.get(id = pk)
+    Lect = Lecturer.objects.filter(id = pk).update(mat_no = request.user.mat_no)
+    return redirect('dashboard')
         
 
 @login_required(login_url = 'signin')

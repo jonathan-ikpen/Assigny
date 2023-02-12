@@ -33,11 +33,15 @@ class Lecturer(models.Model):
     due = models.DateTimeField(blank=True)
     attachment = models.FileField(upload_to='media/files')
     date_created = models.DateTimeField(auto_now_add=True)
-    score = models.IntegerField(null=True)
+    submit_status = models.CharField(max_length = 255, null = True)
+    mat_no = models.CharField(max_length = 255, null = True)
 
+    
 
     def __str__(self):
         return self.course_code
+    
+
 
 
 
@@ -56,8 +60,11 @@ class Student(models.Model):
     assignment = models.ForeignKey(Lecturer, on_delete=models.SET_NULL, null = True)
     score = models.IntegerField(null=True)
     assign_title = models.CharField(max_length=255, null= True)
+    
 
 
     def __str__(self):
         return self.name + "  ===========  " + str(self.id)
+    
+    
 
